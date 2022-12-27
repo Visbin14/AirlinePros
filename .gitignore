@@ -1,0 +1,11 @@
+*.pyc
+*.env
+.idea/
+sent_emails/
+jshintrc
+roenv
+log/debug.log
+db.sqlite3
+.DS_Store
+venv
+venv.zip

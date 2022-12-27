@@ -1,0 +1,42 @@
+<div class="dragscroll" style="width: 100%; height: 100%; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
+    <div class="table-wrapper">      
+        <table class="table_border summary_table">
+            <div>
+                <tr> 
+                    <th>REGION</th>
+                    <th>COUNTRY</th>
+                    <th>YEAR</th>
+                    <th>AIRLINE</th>
+                    <th>AIRLINE IATA CODE</th>
+                    <th>IATA NUMERIC CODE</th>
+                    <th>AGREEMENT TYPE</th>
+                    <th>CONTRACED WITH</th>
+                    <th>MONTH</th>
+                    <th>ORC_RATE</th>
+                    <th>GROSS</th>
+                    <th>NETT</th>
+                    <th>ORC ACTUAL</th>
+                </tr>
+            </div>
+            <div>
+                {% for datum in data %}
+                <tr>
+                    <td>{{datum.Region}}</td>
+                    <td>{{datum.Country}}</td>
+                    <td>{{datum.Year}}</td>
+                    <td>{{datum.Airline}}</td>
+                    <td>{{datum.Airline_IATA_Code}}</td>
+                    <td>{{datum.IATA_Numeric_Code}}</td>
+                    <td>{{datum.Agreement_Type}}</td>
+                    <td>{{datum.Contraced_With}}</td>
+                    <td>{{datum.Month}}</td>
+                    <td>{{datum.ORC_Rate}}</td>
+                    <td>{{datum.Gross}}</td>
+                    <td>{{datum.Nett}}</td>
+                    <td>{{datum.ORC_Actual}}</td>
+                </tr>
+                {% endfor %}
+            </div>
+        </table>
+    </div> 
+</div>
