@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load report_tags %}
+{% block title %} DASHBOARD {% endblock %}
+{% block content%}
+
+
+<style type="text/css">
+    body
+    {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+    .modal
+    {
+        position: fixed;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: Black;
+        filter: alpha(opacity=60);
+        opacity: 0.6;
+        -moz-opacity: 0.8;
+    }
+    .center
+    {
+        z-index: 1000;
+        margin: 300px auto;
+        padding: 10px;
+        width: 130px;
+        background-color: White;
+        border-radius: 10px;
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1;
+    }
+    .center img
+    {
+        height: 128px;
+        width: 128px;
+    }
+</style>
+
+
+<content>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-wrapper filter_wrapper">
+                
+                        <div class="row">
+                        
+                            <div>
+                                <select id ='orc_rate' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Orc_rate</option>
+                                    {% for i in unique_orc_rate %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            
+                                <select id ='nett' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Nett</option>
+                                    {% for i in unique_nett %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <select id ='orc_actual' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Orc_actual</option>
+                                    {% for i in unique_orc_actual %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            
+                                <select id ='agreement_type' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Agreement_type</option>
+                                    {% for i in unique_agreement_type %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <select id ='IATA_numeric_code' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by IATA_numeric_code</option>
+                                    {% for i in unique_IATA_numeric_code %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            
+                                <select id ='airline' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Airline</option>
+                                    {% for i in unique_airline %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <select id ='country' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Country</option>
+                                    {% for i in unique_country %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            
+                                <select id ='gross' onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Gross</option>
+                                    {% for i in unique_gross %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <select id ='month'  onchange="getsorted()" class="form-control dropdown_arr_btn" style="margin-left: 30px">
+                                    <option value="">Filter by Month</option>
+                                    {% for i in unique_month %}
+                                        <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="modal">
+                                <img src="{% static '/debug_toolbar/img/loading.gif' %}" width="100" height="100" style="margin-left: 800px; margin-top: 300px">
+                            </div>
+                            
+
+                            {% comment %} <div class="filter_btn_grp">
+                                <button class="primary_btn" onclick="location.href='{% url 'upload' %}'">Upload-File</button>
+                            </div> {% endcomment %}
+
+                            <div class="filter_btn_grp" style="margin-right: 100px;
+                            margin-top: 30px;">
+                                <button class="secondary_btn_v2" onclick="location.href='{% url 'pivot' %}'">Reset</button>
+                            </div> 
+
+                        </div>
+
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="dragscroll" style="width: 100%; height: 100%; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
+                            
+                                <div class="table-wrapper">      
+                                    <table class="table_border summary_table">
+                                        <div>
+                                            <tr>
+                                                <td>{{pivot_data|safe}}</td>
+                                            </tr>
+                                        </div>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</content>
+
+<script>
+    
+    function getsorted(){
+
+
+        $(".modal").show();
+        ORC_Rate_ = $('#orc_rate').find(":selected").val()
+        Nett_ = $('#nett').find(":selected").val()
+        ORC_Actual_ = $('#orc_actual').find(":selected").val()
+        Agreement_Type_ = $('#agreement_type').find(":selected").val()
+        IATA_Numeric_Code_ = $('#IATA_numeric_code').find(":selected").val()
+        Airline_ = $('#airline').find(":selected").val()
+        Country_ = $('#country').find(":selected").val()
+        Gross_ = $('#gross').find(":selected").val()
+        Month_ = $('#month').find(":selected").val()
+        
+        //$('.loader').css("visibility", "visible");
+        $.ajax({
+            method : "GET",
+            url : "",
+            data :
+            
+            {	
+                
+                "orc_rate":ORC_Rate_,
+                "nett":Nett_,
+                "orc_actual":ORC_Actual_,
+                "agreement_type":Agreement_Type_,
+                "IATA_numeric_code":IATA_Numeric_Code_,
+                "airline":Airline_,
+                "country":Country_,
+                "gross":Gross_,
+                "month":Month_,
+                "is_filter":true
+                
+                    
+            },
+            
+            
+            success: function(response){
+                $(".modal").hide();
+
+                    if (response.status){
+                        $('.dragscroll').replaceWith(response.html_to_replace);
+                        
+                    }
+
+            },
+            complete: function(){
+
+                
+            }
+        })
+    }
+
+</script>
+
+
+{% endblock %}

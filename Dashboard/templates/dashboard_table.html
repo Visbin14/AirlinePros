@@ -26,14 +26,14 @@
                     <td>{{datum.Year}}</td>
                     <td>{{datum.Airline}}</td>
                     <td>{{datum.Airline_IATA_Code}}</td>
-                    <td>{{datum.IATA_Numeric_Code}}</td>
+                    <td>{{datum.IATA_Numeric_Code|floatformat:2}}</td>
                     <td>{{datum.Agreement_Type}}</td>
                     <td>{{datum.Contraced_With}}</td>
                     <td>{{datum.Month}}</td>
-                    <td>{{datum.ORC_Rate}}</td>
-                    <td>{{datum.Gross}}</td>
-                    <td>{{datum.Nett}}</td>
-                    <td>{{datum.ORC_Actual}}</td>
+                    <td>{{datum.ORC_Rate|floatformat:2}}</td>
+                    <td>{{datum.Gross|floatformat:2}}</td>
+                    <td>{{datum.Nett|floatformat:2}}</td>
+                    <td>{{datum.ORC_Actual|floatformat:2}}</td>
                 </tr>
                 {% endfor %}
             </div>

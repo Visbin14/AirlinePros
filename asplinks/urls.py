@@ -21,16 +21,13 @@ import debug_toolbar
 from django.views.generic.base import RedirectView
 
 from report import views
-from Dashboard.views import Dashboard,Uploaddashboardfile
-# from Dashboard.views import Dashboard
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('account.urls')),
     path('', include('main.urls')),
-    path('Airlinedashboard/',Dashboard.as_view(),name='dashboard'),
-    path('upload-file/',Uploaddashboardfile.as_view(),name='upload'),
-    # path('Airlinedashboard/', include('Dashboard.urls'),namespace='dashboard'),
+    path('dashboard/', include('Dashboard.urls')),
     path('favicon\.ico', RedirectView.as_view(url='/static/main/img/favicon.ico')),
     path('agencies/', include('agency.urls')),
     path('reports/', include('report.urls')),
